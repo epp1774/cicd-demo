@@ -12,8 +12,8 @@ pipeline {
 
         stage('Test') {
             steps {
-                echo '=== Test Stage: 运行单元测试 ==='
-                sh 'pip3 install -r requirements.txt && python3 -m pytest test_app.py -v'
+                echo '=== Test Stage: 在容器内运行测试 ==='
+                sh 'docker run --rm cicd-demo:${BUILD_ID} python -m pytest test_app.py -v'
             }
         }
 
@@ -21,7 +21,6 @@ pipeline {
             steps {
                 echo '=== Deploy Stage: 部署到 Kind 集群 ==='
                 echo '生产环境：kubectl apply -f deployment.yaml'
-                echo '（需配置 kubectl + kubeconfig 后启用）'
             }
             when {
                 branch 'main'
