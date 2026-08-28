@@ -1,3 +1,4 @@
+cat > Jenkinsfile << 'EOF'
 pipeline {
     agent any
 
@@ -20,7 +21,11 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo '=== Deploy Stage: 部署到 Kind 集群 ==='
-                echo '生产环境：kubectl apply -f deployment.yaml'
+                sh 'kind load docker-image cicd-demo:${BUILD_ID} --name sre-lab'
+                sh 'sed -i "s|image: cicd-demo:.*|image: cicd-demo:${BUILD_ID}|g" deployment.yaml'
+                sh 'kubectl apply -f deployment.yaml'
+                sh 'kubectl rollout status deployment/cicd-demo --timeout=60s'
+                sh 'kubectl get pods -l app=cicd-demo'
             }
             when {
                 branch 'main'
