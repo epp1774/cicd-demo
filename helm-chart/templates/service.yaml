@@ -8,7 +8,7 @@ spec:
   type: {{ .Values.service.type }}
   ports:
   - port: {{ .Values.service.port }}
-    targetPort: 80
+    targetPort: {{ .Values.service.port }}
     nodePort: {{ .Values.service.nodePort }}
   selector:
     app: {{ .Release.Name }}
