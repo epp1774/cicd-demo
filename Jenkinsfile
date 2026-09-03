@@ -21,6 +21,7 @@ pipeline {
         stage("Push") {
             steps {
                 echo "=== Push Stage: 推送镜像到 Harbor ==="
+                sh 'docker login ${HARBOR_URL} -u admin -p SreLab2026!'
                 sh 'docker push ${HARBOR_URL}/${HARBOR_PROJECT}/app:${BUILD_ID}'
             }
         }
