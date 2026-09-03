@@ -2,6 +2,13 @@ pipeline {
     agent any
 
     stages {
+        stage('Debug: 打印环境变量') {
+            steps {
+                echo "BRANCH_NAME = ${env.BRANCH_NAME}"
+                echo "GIT_BRANCH = ${env.GIT_BRANCH}"
+            }
+        }
+
         stage('Build') {
             steps {
                 echo '=== Build Stage: 构建 Docker 镜像 ==='
