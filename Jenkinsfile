@@ -34,7 +34,7 @@ pipeline {
                 sh 'kubectl get pods -l app=cicd-demo'
             }
             when {
-                branch 'main'
+                expression { return env.GIT_BRANCH == 'origin/main' }
             }
         }
     }
