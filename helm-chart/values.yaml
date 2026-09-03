@@ -1,9 +1,12 @@
 replicaCount: 2
 
 image:
-  repository: cicd-demo
+  repository: 192.168.83.200:8888/cicd-demo/app
   tag: latest
   pullPolicy: IfNotPresent
+
+imagePullSecrets:
+  - name: harbor-secret
 
 service:
   type: NodePort
